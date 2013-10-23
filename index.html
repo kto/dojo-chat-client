@@ -12,7 +12,7 @@
   var chat = new ChatConnector("http://192.168.102.66:8080");
 
   //var username=prompt("Please enter your name:");
-  var username = "Team F";
+  var username = "Team F" + Math.floor((Math.random()*16386)+1);;
   chat.login(username);
 
 </script>
@@ -46,17 +46,14 @@ function Ctrl($scope) {
     angular.forEach($scope.rooms, function(room) {
         listoutput += room + '<br>';
       });
-    console.log("hey ho let's go");
     return listoutput;
     
   };
 }
 </script>
-<div>
-  <label>Rooms</label>
-  <h3>Rooms: {{rooms}}</h3>
-  <div id='roomslist'></div>
-  <div ng-bind-html-unsafe="listRooms()"></div>
-</div>
+
+<h3>Rooms: {{rooms}}</h3>
+<div id='roomslist'></div>
+<div ng-bind-html-unsafe="listRooms()"></div>
 </body>
 </html>
