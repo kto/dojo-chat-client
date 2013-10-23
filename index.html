@@ -92,6 +92,8 @@ function Ctrl($scope) {
 <div style="width: 400px; height: 200px; background-color: #e0e0e0; border: 1px solid black;" ng-bind-html-unsafe="messages">
 </div>
 </td><td valign="top">
+Active channel: <b><span ng-bind="lastJoinedRoom"></span></b>
+<br>
 <textarea id="chatmessage" width="100" height="50"></textarea>
 <br>
 <button ng-click="sendMessage()">Send!</button>
