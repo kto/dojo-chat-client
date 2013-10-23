@@ -59,7 +59,7 @@ function Ctrl($scope) {
     console.log('joinRoom:' + room);
     chat.joinRoom(room);
     $scope.lastJoinedRoom = room;
-    document.getElementById("leave_" + room).innerHTML = '<a href="#" onclick="chat.leaveRoom(\'' + room + '\')">(leave)</a>';
+    document.getElementById("leave_" + room).innerHTML = '<a href="#" onclick="leaveRoom(\'' + room + '\')">(leave)</a>';
   };
 
   $scope.sendMessage = function() {
@@ -92,6 +92,12 @@ function Ctrl($scope) {
   };
 
 }
+
+function leaveRoom(room) {
+    chat.leaveRoom(room);
+    document.getElementById("leave_" + room).innerHTML = "";
+  }
+
 </script>
 
 <h3>Rooms:</h3>
