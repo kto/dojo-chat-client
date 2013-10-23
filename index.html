@@ -15,12 +15,16 @@
   var username = "Team F" + Math.floor((Math.random()*16386)+1);;
   chat.login(username);
 
+  var globalscope;
+
 </script>
 <script>
 
 function Ctrl($scope) {
+  globalscope = $scope;
   $scope.messages = '';
   $scope.joinedRooms = 'None';
+  $scope.usersInRoom = {};
 
   chat.handleAllRooms(function (rooms){
   	console.log("all the rooms");
@@ -38,12 +42,18 @@ function Ctrl($scope) {
 
   chat.handleUsersInRoom(function (roomUsers){
     console.log("users in room");
-  	console.log(roomUsers);
+    console.log(roomUsers);
+    room = roomUsers.room;
+    $scope.$apply(function () {
+      $scope.usersInRoom[room] = roomUsers.users;
+    });
   });
   chat.handleReceiveMessage(function (message){
   	console.log("received message");
   	console.log(message);
-    $scope.messages += '<i>(' + message.room + ')</i> <b>' + message.sender + ':</b> ' + message.message + '<br>';
+    $scope.$apply(function () {
+      $scope.messages += '<i>(' + message.room + ')</i> <b>' + message.sender + ':</b> ' + message.message + '<br>';
+    });
   });
   
   $scope.joinRoom = function(room) {
@@ -72,6 +82,7 @@ function Ctrl($scope) {
 <ul>
   <li ng-repeat="room in rooms">
     <a style="cursor:pointer; color: blue;" ng-click="joinRoom(room)"><u>{{room}}</u></a>
+    <span ng-bind="usersInRoom[room]">(unknown)</span>
   </li>
 </ul>
 <span><b>Add new room:</b><input type="text" id="newRoom"></input><button ng-click="addRoom()">Add</button></span>
