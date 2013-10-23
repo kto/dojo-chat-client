@@ -59,6 +59,7 @@ function Ctrl($scope) {
     console.log('joinRoom:' + room);
     chat.joinRoom(room);
     $scope.lastJoinedRoom = room;
+    document.getElementById("leave_" + room).innerHTML = '<a href="#" onclick="chat.leaveRoom(\'' + room + '\')">(leave)</a>';
   };
 
   $scope.sendMessage = function() {
@@ -83,17 +84,26 @@ function Ctrl($scope) {
     $scope.joinRoom(newRoom.value);
     newRoom.value = "";
   };
+  
+  $scope.joinAllRooms = function() {
+    for(idx in $scope.rooms) {
+      $scope.joinRoom($scope.rooms[idx])
+    }
+  };
 
 }
 </script>
 
-<h3>Rooms: {{rooms}}</h3>
+<h3>Rooms:</h3>
 <ul>
   <li ng-repeat="room in rooms">
     <a style="cursor:pointer; color: blue;" ng-click="joinRoom(room)"><u>{{room}}</u></a>
+    <span id="leave_{{room}}"></span>
     <span ng-bind="usersInRoom[room]">(unknown)</span>
   </li>
 </ul>
+<a style="cursor:pointer; color: blue;" ng-click="joinAllRooms()">Join all rooms</a>
+<br>
 <span><b>Add new room:</b><input type="text" id="newRoom"></input><button ng-click="addRoom()">Add</button></span>
 <br><hr>
 <span><b>Joined Rooms: </b></span><span ng-bind="joinedRooms"></span>
