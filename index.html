@@ -59,6 +59,12 @@ function Ctrl($scope) {
     element.value = "";
   };
 
+  $scope.addRoom = function() {
+    newRoom = document.getElementById("newRoom");
+    $scope.joinRoom(newRoom.value);
+    newRoom.value = "";
+  };
+
 }
 </script>
 
@@ -68,6 +74,8 @@ function Ctrl($scope) {
     <a style="cursor:pointer; color: blue;" ng-click="joinRoom(room)"><u>{{room}}</u></a>
   </li>
 </ul>
+<span><b>Add new room:</b><input type="text" id="newRoom"></input><button ng-click="addRoom()">Add</button></span>
+<br><hr>
 <span><b>Joined Rooms: </b></span><span ng-bind="joinedRooms"></span>
 <table>
   <tr><td>
