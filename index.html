@@ -20,6 +20,7 @@
 
 function Ctrl($scope) {
   $scope.messages = '';
+  $scope.joinedRooms = 'None';
 
   chat.handleAllRooms(function (rooms){
   	console.log("all the rooms");
@@ -32,6 +33,7 @@ function Ctrl($scope) {
   chat.handleJoinedRooms(function (rooms){
     console.log("joined rooms");
     console.log(rooms);
+    $scope.joinedRooms = rooms;
   });
 
   chat.handleUsersInRoom(function (roomUsers){
@@ -41,13 +43,18 @@ function Ctrl($scope) {
   chat.handleReceiveMessage(function (message){
   	console.log("received message");
   	console.log(message);
-    $scope.messages += '<b>' + message.sender + ':</b> ' + message.message + '<br>';
+    $scope.messages += '<i>(' + message.room + ')</i> <b>' + message.sender + ':</b> ' + message.message + '<br>';
   });
   
   $scope.joinRoom = function(room) {
     console.log('joinRoom:' + room);
     chat.joinRoom(room);
-    $scope.joinedRoom = room;
+    $scope.lastJoinedRoom = room;
+  };
+
+  $scope.sendMessage = function() {
+    msg = document.getElementById("chatmessage").value;
+    chat.sendMessage($scope.lastJoinedRoom, msg);
   };
 
 }
@@ -59,9 +66,16 @@ function Ctrl($scope) {
     <a style="cursor:pointer; color: blue;" ng-click="joinRoom(room)"><u>{{room}}</u></a>
   </li>
 </ul>
-<span><b>Joined Room: </b></span><span ng-bind="joinedRoom">(none)</span>
-<div ng-bind-html-unsafe="messages">
-
+<span><b>Joined Rooms: </b></span><span ng-bind="joinedRooms"></span>
+<table>
+  <tr><td>
+<div style="width: 400px; height: 200px; background-color: #e0e0e0; border: 1px solid black;" ng-bind-html-unsafe="messages">
 </div>
+</td><td valign="top">
+<textarea id="chatmessage" width="100" height="50"></textarea>
+<br>
+<button ng-click="sendMessage()">Send!</button>
+</td>
+</tr></table>
 </body>
 </html>
