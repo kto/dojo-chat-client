@@ -1,16 +1,23 @@
 <!doctype html>
-<html>
+<html ng-app>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+</head>
 <body>
 <script src="http://192.168.102.66:8080/socket.io/socket.io.js"></script>
 <script src="chatConnector.js"></script>
 <script>
-  
+
 
   var chat = new ChatConnector("http://192.168.102.66:8080");
-  
+
+  var global_rooms = "foobar";
+
   chat.handleAllRooms(function (rooms){
   	console.log("all the rooms");
   	console.log(rooms);
+        //global global_rooms;
+        global_rooms = rooms;
   });
 
   chat.handleJoinedRooms(function (rooms){
@@ -30,5 +37,22 @@
   var username=prompt("Please enter your name:");
   chat.login(username);
 </script>
+<script>
+function NaviCtrl($scope) {
+  $scope.getrooms = function() {
+    //global global_rooms;
+    return global_rooms;
+  }
+}
+function ContentCtrl($scope) {
+}
+</script>
+<div ng-controller="NaviCtrl">
+  <label>Rooms</label>
+  <h3>Rooms: {{getrooms()}}</h3>
+</div>
+<div ng-controller="ContentCtrl">
+  <label>Content</label>
+</div>
 </body>
 </html>
