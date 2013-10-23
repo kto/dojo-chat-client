@@ -19,6 +19,8 @@
 <script>
 
 function Ctrl($scope) {
+  $scope.messages = '';
+
   chat.handleAllRooms(function (rooms){
   	console.log("all the rooms");
   	console.log(rooms);
@@ -39,11 +41,13 @@ function Ctrl($scope) {
   chat.handleReceiveMessage(function (message){
   	console.log("received message");
   	console.log(message);
+    $scope.messages += '<b>' + message.sender + ':</b> ' + message.message + '<br>';
   });
   
   $scope.joinRoom = function(room) {
     console.log('joinRoom:' + room);
     chat.joinRoom(room);
+    $scope.joinedRoom = room;
   };
 
 }
@@ -55,6 +59,9 @@ function Ctrl($scope) {
     <a style="cursor:pointer; color: blue;" ng-click="joinRoom(room)"><u>{{room}}</u></a>
   </li>
 </ul>
+<span><b>Joined Room: </b></span><span ng-bind="joinedRoom">(none)</span>
+<div ng-bind-html-unsafe="messages">
 
+</div>
 </body>
 </html>
