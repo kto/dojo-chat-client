@@ -53,8 +53,10 @@ function Ctrl($scope) {
   };
 
   $scope.sendMessage = function() {
-    msg = document.getElementById("chatmessage").value;
+    element = document.getElementById("chatmessage");
+    msg = element.value;
     chat.sendMessage($scope.lastJoinedRoom, msg);
+    element.value = "";
   };
 
 }
