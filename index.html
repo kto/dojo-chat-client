@@ -41,19 +41,20 @@ function Ctrl($scope) {
   	console.log(message);
   });
   
-  $scope.listRooms = function() {
-    listoutput = ''
-    angular.forEach($scope.rooms, function(room) {
-        listoutput += room + '<br>';
-      });
-    return listoutput;
-    
+  $scope.joinRoom = function(room) {
+    console.log('joinRoom:' + room);
+    alert(room);
   };
+
 }
 </script>
 
 <h3>Rooms: {{rooms}}</h3>
-<div id='roomslist'></div>
-<div ng-bind-html-unsafe="listRooms()"></div>
+<ul>
+  <li ng-repeat="room in rooms">
+    <a style="cursor:pointer; color: blue;" ng-click="joinRoom(room)"><u>{{room}}</u></a>
+  </li>
+</ul>
+
 </body>
 </html>
