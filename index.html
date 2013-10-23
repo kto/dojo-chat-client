@@ -39,14 +39,23 @@ function Ctrl($scope) {
   	console.log("received message");
   	console.log(message);
   });
+  
+  $scope.listRooms = function() {
+    listoutput = ''
+    angular.forEach($scope.rooms, function(room) {
+        listoutput += room + '<br>';
+      });
+    console.log("hey ho let's go");
+    return listoutput;
+    
+  };
 }
 </script>
 <div>
   <label>Rooms</label>
   <h3>Rooms: {{rooms}}</h3>
-</div>
-<div>
-  <label>Content</label>
+  <div id='roomslist'></div>
+  <div ng-bind-html-unsafe="listRooms()"></div>
 </div>
 </body>
 </html>
